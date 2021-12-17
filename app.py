@@ -39,9 +39,11 @@ for k, v in rates.items():
     dictObject = {"currency" : k, "value" : v}
     rateCollection.append(dictObject)
 
-print(str(rateCollection))
+# print(str(rateCollection))
 
 #occured error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:997)')
-exchangeRates.insert_many(rateCollection)
+#solution to error : https://www.mongodb.com/community/forums/t/keep-getting-serverselectiontimeouterror/126190/7
+# exchangeRates.insert_many(rateCollection)
 
-print(str(exchangeRates.find()))
+data = exchangeRates.find()
+print(str(data)) #<pymongo.cursor.Cursor object at 0x000002685EA60340> data unreadable
