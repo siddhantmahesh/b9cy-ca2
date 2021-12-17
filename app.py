@@ -36,9 +36,12 @@ exchangeRates = database["exchangeRates"]
 rateCollection = []
 
 for k, v in rates.items():
-    print(k, v)
+    dictObject = {"currency" : k, "value" : v}
+    rateCollection.append(dictObject)
 
+print(str(rateCollection))
 
-# exchangeRates.insert_many(rates)
+#occured error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:997)')
+exchangeRates.insert_many(rateCollection)
 
-# print(str(exchangeRates.find()))
+print(str(exchangeRates.find()))
