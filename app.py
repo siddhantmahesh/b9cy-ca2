@@ -1,3 +1,4 @@
+from pymongo import database
 import requests
 import json
 import pymongo
@@ -6,10 +7,10 @@ import pymongo
 resp = (requests.get("http://api.exchangeratesapi.io/v1/latest?access_key=f27c66a897df264865447f0c2c682894"))
 
 
-# https://appdividend.com/2020/11/20/how-to-convert-python-string-to-dictionary/
-# conv_data = json.loads(resp.text)
-# rates = conv_data['rates']
-# print(str(rates))
+#convert text to dictionary https://appdividend.com/2020/11/20/how-to-convert-python-string-to-dictionary/
+conv_data = json.loads(resp.text)
+rates = conv_data['rates']
+print(str(rates)) #TEST DATA
 
 # ref mongodb documentation
 
@@ -21,5 +22,16 @@ resp = (requests.get("http://api.exchangeratesapi.io/v1/latest?access_key=f27c66
 
 #conn string for mongoCompass 'mongodb+srv://siddhant:b9cy-ca2@b9cyca2-database.oqc5a.mongodb.net/test'
 
-client = pymongo.MongoClient("mongodb+srv://siddhant:b9cy-ca2@b9cyca2-database.oqc5a.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
-db = client.test
+
+
+print(rates.items())
+
+# client = pymongo.MongoClient("mongodb+srv://siddhant:b9cy-ca2@b9cyca2-database.oqc5a.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+# database = client["ca2db"]
+
+# exchangeRates = database["exchangeRates"]
+
+
+# exchangeRates.insert_many(rates)
+
+# print(exchangeRates.find())
