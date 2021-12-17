@@ -9,10 +9,9 @@ resp = (requests.get("http://api.exchangeratesapi.io/v1/latest?access_key=f27c66
 
 #convert text to dictionary https://appdividend.com/2020/11/20/how-to-convert-python-string-to-dictionary/
 conv_data = json.loads(resp.text)
-rates = conv_data['rates']
-print(str(rates)) #TEST DATA
+rates = conv_data['rates'] #{'AED': 4.134561, 'AFN': 115.381694, 'ALL': 120.117061, 'AMD': 540.984044, ...}
+# print(str(rates)) #TEST DATA HERE
 
-# ref mongodb documentation
 
 #ERROR
 # raise ConfigurationError(
@@ -23,15 +22,23 @@ print(str(rates)) #TEST DATA
 #conn string for mongoCompass 'mongodb+srv://siddhant:b9cy-ca2@b9cyca2-database.oqc5a.mongodb.net/test'
 
 
+# ref mongodb documentation for connection with python
 
-print(rates.items())
+client = pymongo.MongoClient("mongodb+srv://siddhant:b9cy-ca2@b9cyca2-database.oqc5a.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+database = client["ca2db"]
 
-# client = pymongo.MongoClient("mongodb+srv://siddhant:b9cy-ca2@b9cyca2-database.oqc5a.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
-# database = client["ca2db"]
+exchangeRates = database["exchangeRates"]
 
-# exchangeRates = database["exchangeRates"]
+#TRANSFORM DATA INTO BELOW FORMAT FOR INSERTING INTO COLLECTION:
+#TARGET FORMAT - [{"currency" : "AED", "value" : 4.134561}, {...}, {...}]
+#CURRENT FORMAT RECVD. FROM RESPONSE- {'AED': 4.134561, 'AFN': 115.381694, 'ALL': 120.117061, 'AMD': 540.984044, ...}
+
+rateCollection = []
+
+for k, v in rates.items():
+    print(k, v)
 
 
 # exchangeRates.insert_many(rates)
 
-# print(exchangeRates.find())
+# print(str(exchangeRates.find()))
