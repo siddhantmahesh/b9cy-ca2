@@ -1,11 +1,13 @@
-from bson.objectid import ObjectId
 from flask import Flask, request
 import pymongo
 from datetime import datetime
-
+from flask_cors import CORS
 from pymongo.collection import ReturnDocument
 
+# REF https://flask-cors.readthedocs.io/en/latest/
 app = Flask(__name__)
+CORS(app) # ENABLE CROSS ORIGIN REQUESTS
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 client = pymongo.MongoClient("mongodb+srv://siddhant:b9cy-ca2@b9cyca2-database.oqc5a.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 database = client["ca2db"] #db instance
@@ -18,15 +20,15 @@ userSubs = database["userSubs"] #subs collection instance
 def getRates ():
     try:
         data = database.exchangeRates.find({}, {"_id" : 0}) #select from collection
-        resultData = []
+        resultData = {}
 
         for item in list(data):
-            resultData.append({item["currency"] : item["value"]}) #transform data for front end suitability
+            resultData[item["currency"]] = item["value"] #transform data for front end suitability
 
         return {
             "code" : 200,
             "msg" : "Success",
-            "data" : str(resultData) #return as string/dict DOESNT return as list
+            "rates" : resultData #return as string/dict DOESNT return as list
         }
 
     except Exception as e:
@@ -36,7 +38,7 @@ def getRates ():
         return {
             "code" : 500,
             "msg" : str(e),
-            "data" : [] #return as string/dict DOESNT return as list
+            "rates" : ""
         }
         
 @app.route('/getUser/<email>')
@@ -45,6 +47,7 @@ def getUser (email):
         result = database.userSubs.find({"email" : email})
         resultData = list(result)
 
+        #RESPONSE
         return {
             "code" : 200,
             "msg" : "Success",
@@ -58,7 +61,7 @@ def getUser (email):
         return {
             "code" : 500,
             "msg" : str(e),
-            "data" : []
+            "data" : ""
         }
 
 @app.route('/addUser', methods=['POST']) #add new user data
@@ -72,9 +75,9 @@ def addUser ():
         #   "threshold" : 1.13, 
         #   "condition" : False (True == ABOVE; False == BELOW)
         # }
-        result = userSubs.insert_one(data)
-        resultData = list(result)
+        resultData = userSubs.insert_one(data).inserted_id
 
+        #RESPONSE
         return {
             "code" : 200,
             "msg" : "Success",
@@ -88,7 +91,7 @@ def addUser ():
         return {
             "code" : 500,
             "msg" : str(e),
-            "data" : []
+            "data" : ""
         }
 
 # REF https://www.geeksforgeeks.org/python-mongodb-find_one_and_update-query/
@@ -114,6 +117,7 @@ def updateUser ():
         # print(str(result))
         # resultData = list(result)
 
+        #RESPONSE
         return {
             "code" : 200,
             "msg" : "Success",
@@ -127,7 +131,7 @@ def updateUser ():
         return {
             "code" : 500,
             "msg" : str(e),
-            "data" : []
+            "data" : ""
         }
 
 
