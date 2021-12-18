@@ -35,9 +35,31 @@ def getRates ():
             "msg" : str(e),
             "data" : [] #return as string/dict DOESNT return as list
         }
+        
+@app.route('/getUser/<email>')
+def getUser (email):
+    try:
+        result = database.userSubs.find({"email" : email})
+        data = list(result)
+
+        return {
+            "code" : 200,
+            "msg" : "Success",
+            "data" : str(data)
+        }
+
+    except Exception as e:
+        with open("errors.txt", "a") as err:
+            err.write("\n Error : " + str(e) + "/@app.route('/getUser/<email>')/Timestamp : " + str(datetime.now()))
+
+        return {
+            "code" : 500,
+            "msg" : str(e),
+            "data" : []
+        }
 
 @app.route('/addUser', methods=['POST']) #add new user data
-def insertNewUser ():
+def addUser ():
     try:
         data = request.get_json()
         # SAMPLE DATA {
@@ -48,11 +70,12 @@ def insertNewUser ():
         #   "condition" : False (True == ABOVE; False == BELOW)
         # }
         result = userSubs.insert_one(data)
+        data = list(result)
 
         return {
             "code" : 200,
             "msg" : "Success",
-            "data" : str(result)
+            "data" : str(data)
         }
 
     except Exception as e:
