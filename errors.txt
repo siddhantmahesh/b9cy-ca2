@@ -1,2 +1,23 @@
 
  Error : Collection.delete_many() missing 1 required positional argument: 'filter'// Timestamp : 2021-12-17 20:50:52.423052
+ Error : E11000 duplicate key error collection: ca2db.userSubs index: unique_email dup key: { _fts: "googl", _ftsx: 0.75 }, full error: {'index': 0, 'code': 11000, 'keyPattern': {'_fts': 'text', '_ftsx': 1}, 'keyValue': {'_fts': 'googl', '_ftsx': 0.75}, 'errmsg': 'E11000 duplicate key error collection: ca2db.userSubs index: unique_email dup key: { _fts: "googl", _ftsx: 0.75 }'}/@app.route('/addUser', methods=['POST'])/Timestamp : 2021-12-18 12:49:32.757239
+ Error : 'NoneType' object is not iterable/@app.route('/updateUser', methods=['POST'])/Timestamp : 2021-12-18 12:56:12.787760
+ Error : 'NoneType' object is not iterable/@app.route('/updateUser', methods=['POST'])/Timestamp : 2021-12-18 12:57:19.471729
+ Error : 'NoneType' object is not iterable/@app.route('/updateUser', methods=['POST'])/Timestamp : 2021-12-18 12:58:22.650337
+ Error : 'NoneType' object is not iterable/@app.route('/updateUser', methods=['POST'])/Timestamp : 2021-12-18 12:59:20.875791
+ Error : 'NoneType' object is not iterable/@app.route('/updateUser', methods=['POST'])/Timestamp : 2021-12-18 13:01:08.749115
+ Error : 'NoneType' object is not iterable/@app.route('/updateUser', methods=['POST'])/Timestamp : 2021-12-18 13:02:02.590642
+ Error : 'NoneType' object is not iterable/@app.route('/updateUser', methods=['POST'])/Timestamp : 2021-12-18 13:02:41.584450
+ Error : 'NoneType' object is not iterable/@app.route('/updateUser', methods=['POST'])/Timestamp : 2021-12-18 13:03:11.578893
+ Error : 'NoneType' object is not iterable/@app.route('/updateUser', methods=['POST'])/Timestamp : 2021-12-18 13:03:43.408860
+ Error : 'NoneType' object is not iterable/@app.route('/updateUser', methods=['POST'])/Timestamp : 2021-12-18 13:04:20.368269
+ Error : 'NoneType' object is not iterable/@app.route('/updateUser', methods=['POST'])/Timestamp : 2021-12-18 13:05:21.749246
+ Error : 'NoneType' object is not iterable/@app.route('/updateUser', methods=['POST'])/Timestamp : 2021-12-18 13:07:09.117059
+ Error : 'NoneType' object is not iterable/@app.route('/updateUser', methods=['POST'])/Timestamp : 2021-12-18 13:23:01.454856
+ Error : 'NoneType' object is not iterable/@app.route('/updateUser', methods=['POST'])/Timestamp : 2021-12-18 13:24:51.924463
+ Error : 'NoneType' object is not iterable/@app.route('/updateUser', methods=['POST'])/Timestamp : 2021-12-18 13:25:45.466348
+ Error : 'NoneType' object is not iterable/@app.route('/updateUser', methods=['POST'])/Timestamp : 2021-12-18 13:26:26.103090
+ Error : 'jbct@google' is not a valid ObjectId, it must be a 12-byte input or a 24-character hex string/@app.route('/updateUser', methods=['POST'])/Timestamp : 2021-12-18 13:28:16.743848
+ Error : 'NoneType' object is not iterable/@app.route('/updateUser', methods=['POST'])/Timestamp : 2021-12-18 13:28:52.451327
+ Error : 'NoneType' object is not iterable/@app.route('/updateUser', methods=['POST'])/Timestamp : 2021-12-18 13:49:16.316675
+ Error : 'NoneType' object is not iterable/@app.route('/updateUser', methods=['POST'])/Timestamp : 2021-12-18 13:49:46.892787
