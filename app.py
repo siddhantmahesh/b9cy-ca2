@@ -69,6 +69,7 @@ while(True):
         database = client["ca2db"]
 
         exchangeRates = database["exchangeRates"]
+        userSubs = database["userSubs"]
 
         rateCollection = []
 
@@ -91,14 +92,21 @@ while(True):
         #ERROR & FIX : occured error while insertion [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:997)')
         #REF solution to insertion error : https://www.mongodb.com/community/forums/t/keep-getting-serverselectiontimeouterror/126190/7
 
-        data = database.exchangeRates.find({}, {"_id" : 0}) #get data without "_id" property
+        # data = database.exchangeRates.find({}, {"_id" : 0}) #get data without "_id" property
         # print(str(data)) #<pymongo.cursor.Cursor object at 0x000002685EA60340> data unreadable
 
         # for item in data:
         #     print(str(item))
 
         #REF https://zetcode.com/python/pymongo/
-        print(list(data))
+        # print(list(data))
+
+        userData = userSubs.find({}, {"_id" : 0})
+
+        #iterate through saved user data
+
+        for user in userData:
+            print(str(user))
 
         print (datetime.now())
 
