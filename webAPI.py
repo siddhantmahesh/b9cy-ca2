@@ -19,24 +19,24 @@ userSubs = database["userSubs"] #subs collection instance
 @app.route('/getRates')
 def getRates ():
     try:
-        data = database.exchangeRates.find({}, {"_id" : 0}) #select from collection
+        data = database.exchangeRates.find({}, {"_id" : 0}) #select from collection, _id not required for UI
         resultData = {}
 
         for item in list(data):
             resultData[item["currency"]] = item["value"] #transform data for front end suitability
 
         return {
-            "code" : 200,
+            "code" : 200, #200 for success
             "msg" : "Success",
-            "rates" : resultData #return as string/dict DOESNT return as list
+            "rates" : resultData
         }
 
     except Exception as e:
         with open("errors.txt", "a") as err:
-            err.write("\n Error : " + str(e) + "/@app.route('/getRates')/Timestamp : " + str(datetime.now()))
+            err.write("\n Error : " + str(e) + "/@app.route('/getRates')/Timestamp : " + str(datetime.now())) #log any errors
 
         return {
-            "code" : 500,
+            "code" : 500, #500 for error
             "msg" : str(e),
             "rates" : ""
         }
@@ -44,7 +44,7 @@ def getRates ():
 @app.route('/getUser/<email>')
 def getUser (email):
     try:
-        result = database.userSubs.find({"email" : email})
+        result = database.userSubs.find({"email" : email}) #find document where "email" = email
         resultData = list(result)
 
         #RESPONSE
@@ -69,7 +69,7 @@ def addUser ():
     try:
         data = request.get_json()
         # SAMPLE DATA {
-        #   "email" : "abc@abc",
+        #   "email" : "abc@abc", DONOT ADD DISPARATE EMAIL ADDRESS, BREAKS SEND EMAIL CODE IN APP.PY
         #   "name" : "jon paul",
         #   "currency" : "USD",
         #   "threshold" : 1.13, 
@@ -95,14 +95,14 @@ def addUser ():
         }
 
 # REF https://www.geeksforgeeks.org/python-mongodb-find_one_and_update-query/
-@app.route('/updateUser', methods=['POST']) #add new user data
+@app.route('/updateUser', methods=['POST']) #updating existing user data
 def updateUser ():
     try:
         data = dict(request.get_json())
         # print (str(data))
 
         # print(list(userSubs.find({"_id" : ObjectId(data["_id"])})))
-        result = userSubs.find_one_and_update({'email' : data["email"]},
+        result = userSubs.find_one_and_update({'email' : data["email"]}, #update below fields where "email" = email
             {
                 '$set' : {
                             "name" : data["name"],
@@ -111,7 +111,7 @@ def updateUser ():
                             "condition" : data["condition"]
                         }
             }, 
-            return_document=ReturnDocument.AFTER)
+            return_document=ReturnDocument.AFTER) #return updated document after insertion
 
         # print (1)
         # print(str(result))
@@ -136,4 +136,4 @@ def updateUser ():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',port='8080',debug=True) #add debug=true for dev purpose
+    app.run(host='0.0.0.0',port='5000') #add debug=true for dev purpose
