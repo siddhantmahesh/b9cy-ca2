@@ -104,19 +104,21 @@ while(True):
                 name = user.get("name")
                 currency = user.get("currency")
                 condition = user.get("condition")
-                threshold = user.get("threshold")
+                threshold = float(user.get("threshold"))
 
                 #get user selected currency's current value
                 current_val = rates[currency]
 
                 #compare value current value with user set threshold and conditions
                 #user conditions - ABOVE == True, BELOW == False
-                if (condition) :
+                if (str(condition) == "True") :
+                    # print(condition)
                     if (current_val > threshold) : 
                         #send mail if current_val ABOVE threshold
                         sendEmail(email, currency, current_val)
                         # pass
                 else :
+                    # print(condition)
                     if (current_val < threshold) : 
                         #send mail if current_val BELOW threshold
                         sendEmail(email, currency, current_val)
