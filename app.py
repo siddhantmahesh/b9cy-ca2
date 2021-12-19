@@ -11,33 +11,23 @@ import smtplib
 # 2) https://realpython.com/python-send-email/#sending-a-plain-text-email
 # 3) https://zetcode.com/python/smtplib/
 
-def sendEmail(receiverMailID : str):
+def sendEmail(receiverMailID : str, currency : str, currencyValue : float):
+
     senderMailID = "10585724.dbs@gmail.com"
     password = "YeavNnxO19U"
 
-    try:
-        with smtplib.SMTP("smtp.gmail.com", 587) as smtp: #use port 587 for gmail
-        # print(1)
-            smtp.starttls()
-        # print(2)
-            smtp.login(senderMailID, password)
-        # print(3)
-            subject = "Hey there"
-            body = "Hi!"
-
-            mail = "Subject : " + subject + "\n\n" + body
-            print(mail)
-
-            smtp.sendmail(senderMailID, receiverMailID, mail)
-
-    except smtplib.SMTPException as e:
-        print(1)
-        print(str(e))
-
-    except Exception as e:
-        print(2)
-        print(str(e))
-
+    with smtplib.SMTP("smtp.gmail.com", 587) as smtp: #use port 587 for gmail
+    # print(1)
+        smtp.starttls()
+    # print(2)
+        smtp.login(senderMailID, password)
+    # print(3)
+        subject = currency + " Currency Rate"
+        body = "Hi! New rate for " + currency + " : " + str(currencyValue) + " EUR"
+        mail = "Subject : " + subject + "\n\n" + body
+        print(mail)
+        smtp.sendmail(senderMailID, receiverMailID, mail)
+        
 # test sendEmail("mashhuda20297@gmail.com")
 
 while(True):
@@ -109,30 +99,41 @@ while(True):
 
             # eg : {'email': 'abc@abc', 'name': 'jon paul', 'currency': 'USD', 'threshold': 1.13, 'condition': False}
             # {'email': 'jbct@google', 'name': 'jackie brown', 'currency': 'CAD', 'threshold': 2.79, 'condition': False}
+            try:
+                email = user.get("email")
+                name = user.get("name")
+                currency = user.get("currency")
+                condition = user.get("condition")
+                threshold = user.get("threshold")
 
-            email = user.get("email")
-            name = user.get("name")
-            currency = user.get("currency")
-            condition = user.get("condition")
-            threshold = user.get("threshold")
+                #get user selected currency's current value
+                current_val = rates[currency]
 
-            #get user selected currency's current value
-            current_val = rates[currency]
+                #compare value current value with user set threshold and conditions
+                #user conditions - ABOVE == True, BELOW == False
+                if (condition) :
+                    if (current_val > threshold) : 
+                        #send mail if current_val ABOVE threshold
+                        sendEmail(email, currency, current_val)
+                        # pass
+                else :
+                    if (current_val < threshold) : 
+                        #send mail if current_val BELOW threshold
+                        sendEmail(email, currency, current_val)
+                        # pass
+            
+            except smtplib.SMTPException as e:
+                print(1)
+                print(str(e))
+                continue
 
-            #compare value current value with user set threshold and conditions
-            #user conditions - ABOVE == True, BELOW == False
-            if (condition) :
-                if (current_val > threshold) : 
-                    #send mail if current_val ABOVE threshold
-                    pass
-            else :
-                if (current_val < threshold) : 
-                    #send mail if current_val BELOW threshold
-                    pass
+            except Exception as e:
+                print(2)
+                print(str(e))
+                continue
 
 
-
-        print (datetime.now())
+        # print (datetime.now())
 
         time.sleep(43200) #fetch new data and update every 12 hrs
 

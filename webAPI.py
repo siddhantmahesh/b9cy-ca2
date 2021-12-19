@@ -51,7 +51,7 @@ def getUser (email):
         return {
             "code" : 200,
             "msg" : "Success",
-            "data" : str(resultData)
+            "data" : resultData
         }
 
     except Exception as e:
@@ -81,7 +81,7 @@ def addUser ():
         return {
             "code" : 200,
             "msg" : "Success",
-            "data" : str(resultData)
+            "data" : resultData
         }
 
     except Exception as e:
@@ -121,7 +121,7 @@ def updateUser ():
         return {
             "code" : 200,
             "msg" : "Success",
-            "data" : str(result)
+            "data" : result
         }
 
     except Exception as e:
