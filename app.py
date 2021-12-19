@@ -4,6 +4,41 @@ import json
 import pymongo
 from datetime import datetime
 import time
+import smtplib
+
+# REF Send email
+# 1) https://docs.python.org/3/library/smtplib.html
+# 2) https://realpython.com/python-send-email/#sending-a-plain-text-email
+# 3) https://zetcode.com/python/smtplib/
+
+def sendEmail(receiverMailID : str):
+    senderMailID = "10585724.dbs@gmail.com"
+    password = "YeavNnxO19U"
+
+    try:
+        with smtplib.SMTP("smtp.gmail.com", 587) as smtp: #use port 587 for gmail
+        # print(1)
+            smtp.starttls()
+        # print(2)
+            smtp.login(senderMailID, password)
+        # print(3)
+            subject = "Hey there"
+            body = "Hi!"
+
+            mail = "Subject : " + subject + "\n\n" + body
+            print(mail)
+
+            smtp.sendmail(senderMailID, receiverMailID, mail)
+
+    except smtplib.SMTPException as e:
+        print(1)
+        print(str(e))
+
+    except Exception as e:
+        print(2)
+        print(str(e))
+
+# test sendEmail("mashhuda20297@gmail.com")
 
 while(True):
     try:
