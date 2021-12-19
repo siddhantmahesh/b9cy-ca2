@@ -75,14 +75,21 @@ def addUser ():
         #   "threshold" : 1.13, 
         #   "condition" : False (True == ABOVE; False == BELOW)
         # }
-        resultData = userSubs.insert_one(data).inserted_id
+        if(userSubs.count_documents({"email" : data["email"]}) > 0) :
+            return {
+                "code" : 500,
+                "msg" : "Success",
+                "data" : "Already Exists"
+            }
+        else :
+            resultData = userSubs.insert_one(data).inserted_id
 
-        #RESPONSE
-        return {
-            "code" : 200,
-            "msg" : "Success",
-            "data" : resultData
-        }
+            #RESPONSE
+            return {
+                "code" : 200,
+                "msg" : "Success",
+                "data" : str(resultData)
+            }
 
     except Exception as e:
         with open("errors.txt", "a") as err:
@@ -121,7 +128,7 @@ def updateUser ():
         return {
             "code" : 200,
             "msg" : "Success",
-            "data" : result
+            "data" : str(result)
         }
 
     except Exception as e:
@@ -136,4 +143,4 @@ def updateUser ():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',port='5000') #add debug=true for dev purpose
+    app.run(host='0.0.0.0',port='8080') #add debug=true for dev purpose

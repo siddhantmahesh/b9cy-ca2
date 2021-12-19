@@ -135,7 +135,8 @@ while(True):
 
         # print (datetime.now())
 
-        time.sleep(43200) #fetch new data and update every 12 hrs
+        # time.sleep(43200) #fetch new data and update every 12 hrs
+        time.sleep(15) #fetch new data and update every 12 hrs
 
     except Exception as e:
         with open("errors.txt", "a") as err:
